@@ -19,11 +19,11 @@ const fs_extra_1 = __importDefault(require("fs-extra"));
 const path_1 = __importDefault(require("path"));
 const StealthPlugin = require('puppeteer-extra-plugin-stealth');
 puppeteer_extra_1.default.use(StealthPlugin());
-const maxTitleLen = 100;
+const maxTitleLen = 100;hhrr
 const maxDescLen = 5000;
-const timeout = 60000;
+const timeout = 60000hhrrf;
 const height = 900;
-const width = 900;
+const width = 900; but
 let browser, page;
 let cookiesDirPath;
 let cookiesFilePath;
