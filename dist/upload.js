@@ -39,7 +39,10 @@ const upload = (credentials, videos, puppeteerLaunch) => __awaiter(void 0, void 
     cookiesFilePath = path_1.default.join(cookiesDirPath, `cookies-${credentials.email.split('@')[0].replace(/\./g, '_')}-${credentials.email
         .split('@')[1]
         .replace(/\./g, '_')}.json`);
-    yield launchBrowser(puppeteerLaunch);
+    yield launchBrowser({
+    headless: headless,
+    args: ['--no-sandbox','--disable-setuid-sandbox','--start-maximized'/*, '--incognito'*/],
+  });
     yield loadAccount(credentials);
     const uploadedYTLink = [];
     for (const video of videos) {
@@ -276,7 +279,10 @@ const update = (credentials, videos, puppeteerLaunch) => __awaiter(void 0, void 
     cookiesFilePath = path_1.default.join(cookiesDirPath, `cookies-${credentials.email.split('@')[0].replace(/\./g, '_')}-${credentials.email
         .split('@')[1]
         .replace(/\./g, '_')}.json`);
-    yield launchBrowser(puppeteerLaunch);
+    yield launchBrowser({
+    headless: headless,
+    args: ['--no-sandbox','--disable-setuid-sandbox','--start-maximized'/*, '--incognito'*/],
+  });
     if (!fs_extra_1.default.existsSync(cookiesFilePath))
         yield loadAccount(credentials);
     const updatedYTLink = [];
@@ -298,7 +304,10 @@ const comment = (credentials, comments, puppeteerLaunch) => __awaiter(void 0, vo
     cookiesFilePath = path_1.default.join(cookiesDirPath, `cookies-${credentials.email.split('@')[0].replace(/\./g, '_')}-${credentials.email
         .split('@')[1]
         .replace(/\./g, '_')}.json`);
-    yield launchBrowser(puppeteerLaunch);
+    yield launchBrowser({
+    headless: headless,
+    args: ['--no-sandbox','--disable-setuid-sandbox','--start-maximized'/*, '--incognito'*/],
+  });
     if (!fs_extra_1.default.existsSync(cookiesFilePath))
         yield loadAccount(credentials);
     const commentsS = [];
@@ -644,10 +653,16 @@ function changeHomePageLangIfNeeded(localPage) {
         yield localPage.goto(uploadURL);
     });
 }
-function launchBrowser(puppeteerLaunch) {
+function launchBrowser({
+    headless: headless,
+    args: ['--no-sandbox','--disable-setuid-sandbox','--start-maximized'/*, '--incognito'*/],
+  }) {
     return __awaiter(this, void 0, void 0, function* () {
         const previousSession = fs_extra_1.default.existsSync(cookiesFilePath);
-        browser = yield puppeteer_extra_1.default.launch(puppeteerLaunch);
+        browser = yield puppeteer_extra_1.default.launch({
+    headless: headless,
+    args: ['--no-sandbox','--disable-setuid-sandbox','--start-maximized'/*, '--incognito'*/],
+  });
         page = yield browser.newPage();
         yield page.setDefaultTimeout(timeout);
         if (previousSession) {
